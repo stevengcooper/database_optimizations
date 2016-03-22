@@ -2,7 +2,13 @@
 <p>Total time before HTML is generated: <%= Time.now - @start_time %> s</p>
 <p>Memory used before HTML is generated: <%= @memory_used %> MB</p>
 <p>Number of hits: <%= @hits.length %></p>
+<h1> Search the Site </h1>
 
+<%= form_tag("show", method: "get") do %>
+ <%= label_tag(:q, "Search for:") %>
+ <%= text_field_tag(:q) %>
+ <%= submit_tag("Search") %>
+<% end %>
 <table>
   <thead>
     <tr>
