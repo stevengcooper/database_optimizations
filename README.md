@@ -17,11 +17,8 @@ After completing this assignment, you should...
 
 ## Deliverables
 
-* **An estimate.**  After you read through this assignment (but before you start coding), write down a number of hours that you expect each part to take (1-3).  Record your hours as you go.
-* **A repository.** You will be working from the existing application found in this repository, but you will make your own copy.
-* **A README.** The README should include data on all of the metrics requested below.
-* **A test suite.** Build your application using TDD.  Your test suite must include unit tests, controller tests, and at least two integration tests.
-* **A reflection on your estimate.**
+* **An estimate.**  I expect this to take 6 hours to complete normal mode.
+* **A reflection on your estimate.** This took me 6 hours to complete all but the memory cache and search bar.
 
 ## Normal Mode
 
@@ -29,23 +26,30 @@ After completing this assignment, you should...
 
 For this project, you will be starting with an application which runs very slowly.  This inefficiency is due partly to the sheer amount of data present, but mostly due to the structure of the code and the database.  Your task is to make it run in a reasonable amount of time.
 
-Once you pull down the application from GitHub, run `bundle install` and `rake db:migrate`, then follow the steps below.
+1. Run `rake db:seed`.  When it is finished, it will tell you how long the process took (in seconds).  It took 1250.6973 seconds.
 
-1. Run `rake db:seed`.  When it is finished, it will tell you how long the process took (in seconds).  Record the amount of time.
-1. Turn on your server and open your browser to `localhost:3000`.  You will have to sort out which parameters you need to pass it.
 1. Open Chrome's timeline in developer tools, then hit Cmd-R on your keyboard.  The timeline will track time to load the page.  Record the following:
-  1. Total time in Chrome's timeline
-  1. "Idle" time in Chrome's timeline
-  1. The time given by Rails at the top of the page
-  1. The time given by Rails at the bottom of the page (sorry for the long scroll)
-  1. Explain what these four numbers are and which are subsets of the others
+  1. Total time in Chrome's timeline: it took > 1hr and 30min. (I grew tired of waiting and moved to the next step.)
 1. Add appropriate indices to the data structure (via migrations).
-1. Record how long it takes to run the migrations that add indices.
 1. Reload the root page and record the four time numbers again.  Calculate your percent improvement in runtime.
+  1. Total time: 21.61 seconds
+  1. "Idle" time in Chrome's timeline: 7744.1 ms
+  1. The time given by Rails at the top of the page: 4.534574 seconds
+  1. The time given by Rails at the bottom of the page: 5.6907125 seconds
+  1. Explain what these four numbers are and which are subsets of the others
+    * The Total time off of the inspect page is the amount of time it took to generate the page as well as create the report.
+    * The time given by Rails at the top of the page is the amount of time it took to begin painting the page.
+    * The idle time is the amount of time the program waited between processes.
+    * The time at the bottom of the page is the amount of time it took to finish painting the page.
 1. Examine the code that is run when the root path loads.  Modify the controller commands which access the database to make them more efficient.
-1. Calculate your percent improvement in runtime.
+  1. "Idle" time in Chrome's timeline: 2267.8 ms
+  1. The time given by Rails at the top of the page: 0.010044 seconds
+  1. The time given by Rails at the bottom of the page: 2.451372 seconds
+  1. Calculate your percent improvement in runtime.
+   * It improved painting time. It took less than half the time. It lowered all times.
 1. Once you have optimized your code as much as you think you can, drop the database, run `rake db:migrate`, and then time how long it takes to run `rake db:seed`.  Was there an improvement or a worsening of runtime?  By what percent and why?
-1. Which is faster: (a) running `rake db:seed` without indices and then running a migration to add indices, or (b) adding indices during your initial `rake db:migrate`, then running `rake db:seed`?
+  * 1532.593154 seconds.
+  * It ran slower this time.  It had to process the indexes while creating the seeds and that slowed it down.  It's faster to run `rake db:seed` without indices and add them after.
 
 You've done a thorough job of analyzing runtime, but now take a look at storage space:
 
